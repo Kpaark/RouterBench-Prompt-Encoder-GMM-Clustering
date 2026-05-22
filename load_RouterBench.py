@@ -1,5 +1,5 @@
 """
-Phase 2 - Load the RouterBench corpus.
+Load the RouterBench corpus.
 
 The RouterBench raw pickle has one row per (query x model) pair (~401k rows).
 For embedding/clustering we only need each *unique* prompt once, paired with

@@ -27,11 +27,7 @@ data/*.npy
 data/*.npz
 data/*.manifest.txt
 
-# Phase 4+ model artifacts (fitted GMMs, scalers, etc.)
 *.joblib
-
-# Generated figures (delete this line if you want to track plots in git)
-figures/*.png
 
 # Environment / secrets
 .env
