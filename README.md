@@ -80,3 +80,23 @@ Outputs (in `data/`):
 - `cluster_summary.csv` - per-cluster `size`, `majority_label`, `purity`, top-3 labels
 - `bic_sweep.csv` - BIC/AIC for each K (when a sweep was run)
 - `gmm.manifest.txt` - run summary (K, covariance type, weighted purity, etc.)
+
+## Plot GMM in 2D PCA space
+
+Reproduces the reference figure: each fitted GMM component is drawn as an
+ellipse in 2D PCA space, colored by its majority RouterBench label. If
+`fit_gmm.py` ran with `--pca-dim > 0`, projection is a slice of the GMM's
+own space; if it ran in raw embedding space, a fresh 2D PCA is fit here
+and the covariances are projected via `Sigma_2d = W Sigma_d W^T`.
+
+```bash
+python pca_and_plot.py
+python pca_and_plot.py --scatter-points --scatter-frac 0.05
+python pca_and_plot.py --n-std 2.5 --alpha 0.4
+python pca_and_plot.py --label-by cluster_id    # debug view, one color per cluster
+```
+
+Outputs (in `figures/`):
+
+- `gmm_pca_majority_class.png` - the main figure
+- `bic_sweep.png` - BIC / AIC vs. K curve (generated when `data/bic_sweep.csv` exists)
