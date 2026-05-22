@@ -57,3 +57,26 @@ Outputs (in `data/`):
 - `embeddings.npy` - shape `(N, dim)`, float32
 - `embeddings.ids.csv` - `sample_id, eval_name, family` aligned row-for-row
 - `embeddings.manifest.txt` - encoder name, dim, normalization, etc.
+
+## Fit GMM
+
+Fits a Gaussian Mixture Model in the embedding space (after optional PCA) and
+records the majority RouterBench label per cluster. Full-covariance GMM in
+768-dim is statistically shaky with only ~36k samples, so the default reduces
+to 50 PCA dims first (override with `--pca-dim 0` to cluster in the raw space).
+
+```bash
+python fit_gmm.py                          # PCA->50, sweep K, BIC pick
+python fit_gmm.py --k 30                   # skip sweep, fit K=30 directly
+python fit_gmm.py --covariance-type diag   # faster axis-aligned ellipses
+python fit_gmm.py --label-col eval_name    # finer-grained majority class
+```
+
+Outputs (in `data/`):
+
+- `gmm.joblib` - fitted `sklearn.mixture.GaussianMixture`
+- `pca.joblib` - fitted `sklearn.decomposition.PCA` (if `--pca-dim > 0`)
+- `cluster_assignments.csv` - per-prompt `cluster_id`, `majority_label`, `is_majority`
+- `cluster_summary.csv` - per-cluster `size`, `majority_label`, `purity`, top-3 labels
+- `bic_sweep.csv` - BIC/AIC for each K (when a sweep was run)
+- `gmm.manifest.txt` - run summary (K, covariance type, weighted purity, etc.)
