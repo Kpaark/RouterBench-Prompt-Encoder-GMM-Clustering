@@ -5,7 +5,7 @@ corpus, encodes it with a sentence encoder, fits a Gaussian Mixture Model in
 the embedding space, and visualizes the result in 2D via PCA (colored by
 majority RouterBench task label per component).
 
-## Setup (Phase 1)
+## Setup 
 
 ```bash
 cd routerbench_gmm
@@ -19,12 +19,12 @@ pip install -r requirements.txt
 | Phase | Script | Purpose |
 |---|---|---|
 | 1 | `requirements.txt` | Pin dependencies |
-| 2 | `01_load_routerbench.py` | Load pickle, dedupe to unique `(prompt, label)` rows |
-| 3 | `02_encode_prompts.py` | Apply prompt encoder -> `embeddings.npy` |
-| 4 | `03_fit_gmm.py` | GMM in full embedding space, BIC sweep |
-| 5 | `04_pca_and_plot.py` | PCA projection + ellipses colored by majority class |
+| 2 | `load_routerbench.py` | Load pickle, dedupe to unique `(prompt, label)` rows |
+| 3 | `encode_prompts.py` | Apply prompt encoder -> `embeddings.npy` |
+| 4 | `fit_gmm.py` | GMM in full embedding space, BIC sweep |
+| 5 | `pca_and_plot.py` | PCA projection + ellipses colored by majority class |
 
-## Phase 2 - Load prompts
+## Load prompts
 
 The RouterBench raw pickle is ~1.1 GB. If you've already cached it for the
 `RouterBench_stats` project, point this script at it directly:
